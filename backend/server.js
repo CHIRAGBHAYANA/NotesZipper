@@ -1,8 +1,11 @@
 const express = require("express");
 const notes = require("./data/notes");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 const app = express();
 dotenv.config();
+connectDB();
+
 const port = process.env.PORT || 5000;
 
 app.get("/api/notes", (req, res) => {
