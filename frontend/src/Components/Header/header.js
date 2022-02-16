@@ -7,9 +7,11 @@ import {
   Container,
   FormControl,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-function header() {
+function Header() {
+  const history = useHistory();
+
   return (
     <div>
       <Navbar bg="primary" expand="lg" variant="dark">
@@ -39,7 +41,14 @@ function header() {
                 <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
 
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action3">Logout</NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => {
+                    localStorage.removeItem("userInfo");
+                    history.push("/");
+                  }}
+                >
+                  Logout
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -49,4 +58,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;
