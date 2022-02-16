@@ -3,9 +3,10 @@ import Mainscreen from "../../Components/Mainscreen";
 import Loading from "../../Components/Loading";
 import ErrorMessage from "../../Components/ErrorMessage";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 function RegisterScreen() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState(
@@ -44,6 +45,7 @@ function RegisterScreen() {
         setError(error.response.data.message);
       }
     }
+    history.push("/login");
   };
 
   const postDetails = (pics) => {
