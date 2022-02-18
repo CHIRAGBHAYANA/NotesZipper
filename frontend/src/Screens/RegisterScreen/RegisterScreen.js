@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import Mainscreen from "../../Components/Mainscreen";
-import Loading from "../../Components/Loading";
-import ErrorMessage from "../../Components/ErrorMessage";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userAction";
+import Mainscreen from "../../Components/Mainscreen";
+import ErrorMessage from "../../Components/ErrorMessage";
+import Loading from "../../Components/Loading";
+
 function RegisterScreen() {
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -17,35 +19,26 @@ function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/mynotes");
+    }
+  }, [history, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(email);
+
     if (password !== confirmPassword) {
-      setMessage("Password do not Match");
+      setMessage("password do not match");
     } else {
-      setMessage(null);
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        setLoading(true);
-        const { data } = await axios.post(
-          "/api/users",
-          { name, pic, email, password },
-          config
-        );
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-      } catch (error) {
-        setError(error.response.data.message);
-      }
+      dispatch(register(name, email, password, pic));
     }
-    history.push("/login");
   };
 
   const postDetails = (pics) => {
@@ -124,9 +117,9 @@ function RegisterScreen() {
               />
             </Form.Group>
 
-            {picMessage && (
+            {/* {picMessage && (
               <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-            )}
+            )} */}
 
             <Form.Group className="mb-3" controlId="pic">
               <Form.Label>Profile Picture</Form.Label>
@@ -148,7 +141,7 @@ function RegisterScreen() {
           </Form>
           <Row className="py-3">
             <Col>
-              Have an Account ? <Link to="/register">Login</Link>
+              Have an Account ? <Link to="/login">Login</Link>
             </Col>
           </Row>
         </div>
