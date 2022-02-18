@@ -117,9 +117,9 @@ function RegisterScreen() {
               />
             </Form.Group>
 
-            {/* {picMessage && (
+            {picMessage && (
               <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-            )} */}
+            )}
 
             <Form.Group className="mb-3" controlId="pic">
               <Form.Label>Profile Picture</Form.Label>
