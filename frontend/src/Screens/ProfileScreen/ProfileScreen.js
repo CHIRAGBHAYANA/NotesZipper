@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { updateProfile } from "../../actions/userAction";
 import Loading from "../../Components/Loading";
 import "./ProfileScreen.css";
+
 function ProfileScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
