@@ -23,7 +23,7 @@ function SingleNote({ match, history }) {
   const { loading: loadingDelete, error: errorDelete } = noteDelete;
 
   const deleteHandler = (id) => {
-    if (window.confirm("Are you sure ?")) {
+    if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
     }
     history.push("/mynotes");
